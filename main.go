@@ -11,6 +11,19 @@ import (
 
 func main() {
 
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+		_, err := w.Write([]byte("hello world1"))
+		if err != nil {
+			log.Fatal(err)
+		}
+	})
+
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	cfg, err := config.Get()
 	if err != nil {
 		log.Fatal(err)

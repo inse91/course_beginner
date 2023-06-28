@@ -36,15 +36,19 @@ func (h *Handler) sum(c *gin.Context) {
 	sum, err := h.uc.Sum(input.A, input.B)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, model.SumResponse{
-			Sum:     0,
-			Success: false,
-			Error:   err.Error(),
+			Sum: 0,
+			CommonResponse: model.CommonResponse{
+				Success: false,
+				Error:   err.Error(),
+			},
 		})
 		return
 	}
 	c.JSON(http.StatusOK, model.SumResponse{
-		Sum:     sum,
-		Success: true,
+		Sum: sum,
+		CommonResponse: model.CommonResponse{
+			Success: true,
+		},
 	})
 	return
 

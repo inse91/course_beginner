@@ -2,8 +2,11 @@ package config
 
 import (
 	"encoding/json"
-	"io"
 	"os"
+)
+
+const (
+	defaultPort = "8080"
 )
 
 type Config struct {
@@ -11,12 +14,7 @@ type Config struct {
 }
 
 func Get() (Config, error) {
-	cfgFile, err := os.Open("config/config.json")
-	if err != nil {
-		return Config{}, err
-	}
-
-	bts, err := io.ReadAll(cfgFile)
+	bts, err := os.ReadFile("config/config.json")
 	if err != nil {
 		return Config{}, err
 	}
@@ -24,6 +22,10 @@ func Get() (Config, error) {
 	var cfg Config
 	if err = json.Unmarshal(bts, &cfg); err != nil {
 		return Config{}, err
+	}
+
+	if cfg.Port == "" {
+		cfg.Port = defaultPort
 	}
 
 	return cfg, nil

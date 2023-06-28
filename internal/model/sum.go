@@ -6,7 +6,11 @@ type SumRequest struct {
 }
 
 type SumResponse struct {
-	Sum     int    `json:"sum"`
+	Sum int `json:"sum"`
+	CommonResponse
+}
+
+type CommonResponse struct {
 	Success bool   `json:"success"`
-	Error   string `json:"error"`
+	Error   string `json:"error,omitempty"`
 }
